@@ -1,4 +1,4 @@
-package com.ncopado.petagram;
+package com.ncopado.petagram.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ncopado.petagram.pojo.Pet;
+import com.ncopado.petagram.R;
+
 import java.util.ArrayList;
 
 /**
@@ -22,19 +25,29 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
     ArrayList<Pet> lstPet;
     Activity activity;
-
-    public PetAdaptador(ArrayList<Pet> lstPet,Activity activity) {
+    int type;
+    View view;
+    public PetAdaptador(ArrayList<Pet> lstPet,Activity activity,int type) {
         this.lstPet = lstPet;
+
         this.activity=activity;
+        this.type=type;
     }
 
     @Override
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list,parent,false);
+        if(type==1){
+             view= LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list,parent,false);
+        }
+        else
+        {
+             view= LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list_profile,parent,false);
+        }
 
 
-        return new PetViewHolder(view);
+
+        return new PetViewHolder(view,type);
     }
 
     @Override
@@ -44,26 +57,27 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
         holder.petPhoto.setImageResource(pet.getPhoto());
 
-        holder.tvName.setText(pet.getName());
 
+        if(type==1) {
+            holder.tvName.setText(pet.getName());
+            holder.btnLike.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+
+                public void onClick(View view) {
+
+
+                    Toast.makeText(activity, "Diste like", Toast.LENGTH_SHORT).show();
+                }
+
+
+            });
+        }
 
 
         holder.tvRating.setText( Integer.toString(  pet.getReiting()));
 
 
-        holder.btnLike.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-
-            public void onClick(View view) {
-
-
-
-                Toast.makeText(activity,"Diste like",Toast.LENGTH_SHORT).show();
-            }
-
-
-        });
 
     }
 
@@ -79,14 +93,18 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
         private TextView tvRating;
         private ImageButton btnLike;
 
-        public PetViewHolder(View itemView) {
+        public PetViewHolder(View itemView,int type) {
             super(itemView);
 
 
             petPhoto=(ImageView) itemView.findViewById(R.id.petphoto);
-            tvName=(TextView) itemView.findViewById(R.id.tvNamePet);
+
+            if(type==1) {
+                tvName = (TextView) itemView.findViewById(R.id.tvNamePet);
+                btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
+            }
             tvRating=(TextView) itemView.findViewById(R.id.tvReting);
-            btnLike=(ImageButton)itemView.findViewById(R.id.btnLike);
+
         }
     }
 }

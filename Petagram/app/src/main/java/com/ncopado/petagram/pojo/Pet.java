@@ -1,4 +1,4 @@
-package com.ncopado.petagram;
+package com.ncopado.petagram.pojo;
 
 /**
  * Created by ncopado on 02/09/17.

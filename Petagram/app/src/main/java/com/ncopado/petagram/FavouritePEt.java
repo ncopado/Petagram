@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.ncopado.petagram.adapter.PetAdaptador;
+import com.ncopado.petagram.pojo.Pet;
+
 import java.util.ArrayList;
 
 public class FavouritePEt extends AppCompatActivity {
@@ -41,7 +44,7 @@ public class FavouritePEt extends AppCompatActivity {
     }
 
     public  void InicializarAdaptador(){
-        PetAdaptador adaptador=new PetAdaptador(lstPet,this);
+        PetAdaptador adaptador=new PetAdaptador(lstPet,this,1);
         listPet.setAdapter(adaptador);
     }
 }

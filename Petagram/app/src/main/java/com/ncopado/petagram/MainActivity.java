@@ -1,34 +1,46 @@
 package com.ncopado.petagram;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.ncopado.petagram.adapter.PageAdapter;
+import com.ncopado.petagram.fragment.FragmentLista;
+import com.ncopado.petagram.fragment.FragmentProfile;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Pet> lstPet;
-    private RecyclerView listPet;
+
+
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      listPet=(RecyclerView) findViewById(R.id.rvPet);
 
-        LinearLayoutManager llm=new LinearLayoutManager(this);
 
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        listPet.setLayoutManager(llm);
 
-         AddPet();
-         InicializarAdaptador();
+        tabLayout=(TabLayout) findViewById(R.id.tabLayout);
+
+        viewPager=(ViewPager) findViewById(R.id.viewPager);
+
+        setUpViewPager();
+
 
 
     }
@@ -49,30 +61,45 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(this,FavouritePEt.class);
                 startActivity(intent);
                 break;
+            case R.id.mContact:
+                Intent intentMcontact=new Intent(this,Contact.class);
+                startActivity(intentMcontact);
+                break;
+
+            case R.id.mAbout:
+                Intent intentMaboutUs=new Intent(this,AboutUs.class);
+                startActivity(intentMaboutUs);
+                break;
+
         }
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void AddPet() {
-        lstPet=new ArrayList<Pet>();
 
-        lstPet.add(new Pet("Lola",5,R.drawable.pet1));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet2));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet3));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet4));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet5));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet1));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet2));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet3));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet4));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet5));
+    private  ArrayList<Fragment> agregarFragment(){
+        ArrayList<Fragment> fragments=new ArrayList<>();
+
+        fragments.add(new FragmentLista());
+        fragments.add(new FragmentProfile());
+
+
+        return  fragments;
+    }
+
+
+    private void  setUpViewPager(){
+
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(),agregarFragment()));
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_home);
+
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_action_profile);
+
 
     }
 
-    public  void InicializarAdaptador(){
-        PetAdaptador adaptador=new PetAdaptador(lstPet,this);
-        listPet.setAdapter(adaptador);
-    }
+
 }
