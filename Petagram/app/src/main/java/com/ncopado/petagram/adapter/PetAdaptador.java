@@ -1,6 +1,7 @@
 package com.ncopado.petagram.adapter;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ncopado.petagram.db.PetRepository;
 import com.ncopado.petagram.pojo.Pet;
 import com.ncopado.petagram.R;
 
@@ -32,6 +34,16 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
         this.activity=activity;
         this.type=type;
+    }
+
+    public PetAdaptador(ArrayList<Pet> pets, FragmentActivity activity) {
+
+        this.lstPet = pets;
+
+        this.activity=activity;
+
+        this.type=1;
+
     }
 
     @Override
@@ -65,6 +77,12 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
                 @Override
 
                 public void onClick(View view) {
+
+                    PetRepository petRepository=new PetRepository(activity);
+                    petRepository.insertRating(pet);
+
+                    holder.tvRating.setText(String.valueOf(petRepository.getRatingPet(pet)));
+
 
 
                     Toast.makeText(activity, "Diste like", Toast.LENGTH_SHORT).show();

@@ -6,6 +6,10 @@ package com.ncopado.petagram.pojo;
 
 public class Pet {
 
+
+
+
+    private  int Id;
     private  String Name;
     private  int Reiting;
     private  int Photo;
@@ -15,6 +19,18 @@ public class Pet {
         Name = name;
         Reiting = reiting;
         Photo = photo;
+    }
+
+    public Pet() {
+
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getName() {

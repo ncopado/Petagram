@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ncopado.petagram.adapter.PetAdaptador;
+import com.ncopado.petagram.db.PetRepository;
 import com.ncopado.petagram.pojo.Pet;
 
 import java.util.ArrayList;
@@ -32,14 +33,10 @@ public class FavouritePEt extends AppCompatActivity {
     }
 
     private void GetFavouritePet() {
-        lstPet=new ArrayList<Pet>();
 
-        lstPet.add(new Pet("Lola",5,R.drawable.pet1));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet2));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet3));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet4));
-        lstPet.add(new Pet("Lola",5,R.drawable.pet5));
 
+        PetRepository petRepository=new PetRepository(this);
+         lstPet= petRepository.getTopPets();
 
     }
 
